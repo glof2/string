@@ -47,18 +47,12 @@ String::~String()
 // Resizes the string.
 void String::resize(const size_type size)
 {
-	std::cout << "resize() called\n";
 	String temp{ *this };
-	std::cout << "String copied sucessfuly.\n";
 	delete[] m_start;
-	std::cout << "Deleted old array.\n";
-	m_start = new char[static_cast<int>(size)];
-	std::cout << "Made new array.\n";
-	m_end = m_start + temp.length() + size + 1;
-	std::cout << "size = " << size << '\n';
-	std::cout << "Changed end sucessfuly.\n";
+	m_start = new char[size];
+	m_end = m_start + temp.length() + size + 2;
+	m_capacity = m_start;
 	*this = temp;
-	std::cout << "Copied temp to *this sucessfuly.\n";
 }
 
 // --Getters--
@@ -123,13 +117,12 @@ String& String::operator=(String& string)
 	{
 		resize(static_cast<size_type>(string.m_capacity - string.m_start));
 	}
-
+	
 	for(size_type i{}; i < string.capacity_length(); ++i)
 	{
-		std::cout << i << '/' << string.length() << '\n';
-		m_start[i] = string.at(static_cast<size_type>(i));
+		++m_capacity;
+		m_start[i] = string.at(i);
 	}
-	m_capacity = string.m_capacity;
 	return *this;
 }
 
