@@ -158,12 +158,9 @@ String::operator char*()
 // Outputs the string to the screen.
 std::ostream& operator<<(std::ostream& out, String& string)
 {
-	int i{};
-	for(int i{}; i != string.capacity_length(); ++i)
+	for(char* chr{ string.begin() }; chr != string.capacity(); ++chr)
 	{
-		out << string[i];
-		std::cout << "a";
-		++i;
+		out << *chr;
 	}
 	return out;
 }
