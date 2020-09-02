@@ -9,15 +9,21 @@ String::String()
 	  m_capacity{ m_start } {}
 
 
-String::String(char* string)
+String::String(const char* string)
 { 
 	int length{};
-	for(char* chr{ string }; *chr != '\0'; ++chr)
+	for(const char* chr{ string }; *chr != '\0'; ++chr)
 	{
 		++length;
 	}
 
 	m_start = new char[length];
+	
+	for(int i{}; i != length; ++i)
+	{
+		m_start[i] = string[i];
+	}
+
 	m_end = m_start + length + 1;
 	m_capacity = m_end - 1;
 
