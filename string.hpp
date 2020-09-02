@@ -1,8 +1,8 @@
-#ifndef STRING_H
-#define STRING_H
+#ifndef STRING_HPP
+#define STRING_HPP
 
 #include <iostream>
-#define STRING_H_DEFAULT_SIZE 25
+#define STRING_HPP_DEFAULT_SIZE 25
 
 class String
 {

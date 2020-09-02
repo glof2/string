@@ -1,4 +1,4 @@
-#include "string.h"
+#include "string.hpp"
 #include <cassert>
 #include <iostream>
 
@@ -6,8 +6,8 @@
 
 // Default constructor
 String::String()
-	: m_start{ new char[STRING_H_DEFAULT_SIZE] },
-	  m_end{ m_start + STRING_H_DEFAULT_SIZE },
+	: m_start{ new char[STRING_HPP_DEFAULT_SIZE] },
+	  m_end{ m_start + STRING_HPP_DEFAULT_SIZE },
 	  m_capacity{ m_start } {}
 
 // Constructor with string literal
