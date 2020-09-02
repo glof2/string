@@ -1,5 +1,6 @@
 #include "string.h"
 #include <cassert>
+#include <iostream>
 
 // --Constructors & Destructors--
 String::String()
@@ -26,13 +27,22 @@ String::String(char* string)
 String::String(const String& string)
 {
 	int length{};
-	for(char* chr{ string.m_start }; *chr != '\0'; ++chr)
+	for(char* chr{ string.m_start }; chr < string.m_end; ++chr)
 	{
-		m_start[length] = *chr;
 		++length;
-	} 
-	m_end = m_start + length;
-	m_capacity = m_end;
+	}
+
+	m_start = new char[length];
+	m_end = m_start + length + 1;
+	m_capacity = m_end - 1;
+
+	--length;
+
+	for(int i{}; i < length; ++i)
+	{
+		m_start[i] = string.at(i);
+	}
+	
 }
 
 
@@ -50,8 +60,8 @@ void String::resize(const size_type size)
 	String temp{ *this };
 	delete[] m_start;
 	m_start = new char[size];
-	m_end = m_start + temp.length() + size + 2;
-	m_capacity = m_start;
+	m_end = m_start + size + 1;
+	m_start[size - 1] = '\0';
 	*this = temp;
 }
 
@@ -111,28 +121,49 @@ String::size_type String::capacity_length() const
 
 // --Overloaded operators--
 // Overloaded operator '='. Resizes the string if needed
-String& String::operator=(String& string)
+String& String::operator=(const String& string)
 {
 	if(length() < string.capacity_length())
 	{
 		resize(static_cast<size_type>(string.m_capacity - string.m_start));
 	}
-	
-	for(size_type i{}; i < string.capacity_length(); ++i)
+	size_type capacity{};
+	for(size_type& i{capacity}; i < string.capacity_length(); ++i)
 	{
-		++m_capacity;
 		m_start[i] = string.at(i);
 	}
+	m_capacity = m_start;
+	m_capacity += capacity;
 	return *this;
+}
+
+// Returns value at 'index'
+char String::operator[](const size_type index)
+{
+	return m_start[index];
+}
+
+// Returns pointer to value at index
+char* String::operator+(const size_type index)
+{
+	return m_start + index;
+}
+
+// Returns pointer to the start of the array
+String::operator char*()
+{
+	return m_start;
 }
 
 // Outputs the string to the screen.
 std::ostream& operator<<(std::ostream& out, String& string)
 {
-	for(char* chr_ptr{string.begin()}; chr_ptr <= string.capacity(); ++chr_ptr)
+	int i{};
+	for(int i{}; i != string.capacity_length(); ++i)
 	{
-		std::cout << *chr_ptr;
+		out << string[i];
+		std::cout << "a";
+		++i;
 	}
-	std::cout.flush();
 	return out;
 }

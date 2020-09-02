@@ -58,8 +58,16 @@ public:
 
 	// --Overloaded operators--
 	// Overloaded operator '='. Resizes the string if needed
-	String& operator=(String& string);
-	
+	String& operator=(const String& string);
+
+	// Returns value at index
+	char operator[](const size_type index);
+
+	// Returns pointer to m_start + index
+	char* operator+(const size_type index);
+
+	// returns m_start
+	operator char*();
 };
 
 
