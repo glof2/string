@@ -3,27 +3,35 @@
 #include <iostream>
 
 // --Constructors & Destructors--
+
+// Default constructor
 String::String()
 	: m_start{ new char[STRING_H_DEFAULT_SIZE] },
 	  m_end{ m_start + STRING_H_DEFAULT_SIZE },
 	  m_capacity{ m_start } {}
 
-
-String::String(char* string)
+// Constructor with string literal
+String::String(const char* string)
 { 
 	int length{};
-	for(char* chr{ string }; *chr != '\0'; ++chr)
+	for(const char* chr{ string }; *chr != '\0'; ++chr)
 	{
 		++length;
 	}
 
 	m_start = new char[length];
+	
+	for(int i{}; i != length; ++i)
+	{
+		m_start[i] = string[i];
+	}
+
 	m_end = m_start + length + 1;
 	m_capacity = m_end - 1;
 
 }
 
-
+// Copy constructor
 String::String(const String& string)
 {
 	int length{};
@@ -45,7 +53,7 @@ String::String(const String& string)
 	
 }
 
-
+// Destructor
 String::~String()
 {
 	delete[] m_start;
