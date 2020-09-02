@@ -21,7 +21,7 @@ public:
 	String();
 
 	// Constructor with string literal
-	String(const char* string);
+	String(char* string);
 
 	// Copy constructor
 	String(const String& string);
